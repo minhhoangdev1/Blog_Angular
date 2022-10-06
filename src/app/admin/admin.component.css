@@ -1,0 +1,14 @@
+  .float-left {
+    float: left;
+  }
+  .error {
+    border: 1px solid red;
+  }
+  .trim-info {
+    max-width: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;  
+    position: relative;
+ }
+  

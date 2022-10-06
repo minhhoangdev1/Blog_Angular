@@ -1,0 +1,134 @@
+<div class="container">
+    <div class="row mt-4">
+      <div class="col-12">
+        <h1 class="text-info">Quản lý Blog</h1>
+        <hr />
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="col-md-12">
+        <h3 class="text-success">Thêm mới - Cập nhật Blog</h3>
+        <button (click)="resetBlogForm()">reset Form</button>
+        <hr />
+        <div class="row">
+          <form [formGroup]="form" enctype="multipart/form-data">
+            <div class="form-group col-6 float-left p-1">
+              <label for="title">Tiêu đề</label>
+              <input
+                formControlName="title"
+                type="text"
+                id="title"
+                class="form-control"
+                [class]="{ error: isValidControl('title') }"
+              />
+            </div>
+            <div class="form-group col-6 float-left p-1">
+              <label for="date_create">Ngày tạo</label>
+              <input
+                formControlName="date_create"
+                type="date"
+                id="date_create"
+                class="form-control"
+                [class]="{ error: isValidControl('date_create') }"
+              />
+            </div>
+            <div class="form-group col-6 float-left p-1">
+              <label for="short_desc">Tóm tắt</label>
+              <ckeditor 
+                [editor]="Editor"
+                formControlName="short_desc" 
+                id="short_desc"
+                [class]="{ error: isValidControl('short_desc') }">
+              </ckeditor>
+            </div>
+            <div class="form-group col-6 float-left p-1">
+              <label for="desc">Mô tả</label>
+              <ckeditor 
+                [editor]="Editor"
+                formControlName="desc" 
+                id="desc" 
+                [class]="{ error: isValidControl('desc') }">
+              </ckeditor>
+            </div>
+            <div class="form-group col-6 float-left p-1">
+              <label for="image">Hình ảnh: </label><br>
+              <img [src]="imgUrl" alt="" width="100" style="margin-bottom: 10px;">
+              <input
+                formControlName="image"
+                type="file"
+                id="image"
+                #Image
+                accept="image/*"
+                (change)="handleImageChange($event)"
+                class="form-control"
+                [class]="{ error: isValidControl('image') }"
+              />
+            </div>
+            <div class="form-group col-3">
+              <button
+                class="form-control btn btn-success mt-3"
+                (click)="saveUpdateBlog()"
+              >
+                {{ "SAVE" | translate }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <h3 class="text-success">Danh Sách Blog</h3>
+        <hr />
+        <input type="text" placeholder="Tiêu đề tìm kiếm..." [value]="keyword" [(ngModel)]="keyword" (keyup)="handleSearch()">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Tiêu đề</th>
+              <th>Tóm tắt</th>
+              <th>Mô tả</th>
+              <th>Ảnh</th>
+              <th>Ngày tạo</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let blog of blogRecords  
+                          | paginate: {  
+                            itemsPerPage: tableSize,
+                            currentPage: page,
+                            totalItems: count 
+                        };
+                        let i = index">
+              <td>{{ blog.title }}</td>
+              <td [innerHTML]="blog.short_desc | slice:0:30"></td>
+              <td [innerHTML]="blog.desc | slice:0:70"></td>
+              <td><img src="{{ blog.image }}" alt="" width="50"></td>
+              <td>{{ blog.date_create | date:'mediumDate'}}</td>
+              <td>
+                <button
+                  class="btn btn-sm btn-primary"
+                  (click)="fillBlogDetailsIntoForm(blog)"
+                  title="Edit"
+                >
+                  <i class="fa fa-pencil"></i>
+                </button>
+                <button
+                  class="btn btn-sm btn-danger m-1"
+                  (click)="deleteBlog(blog)"
+                  title="Delete"
+                >
+                  <i class="fa fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <pagination-controls
+          previousLabel="Prev"
+          nextLabel="Next"
+          (pageChange)="onTableDataChange($event)">
+      </pagination-controls>
+      </div>
+    </div>
+  </div>
+
+  

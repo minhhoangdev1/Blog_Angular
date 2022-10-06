@@ -1,0 +1,113 @@
+<!--banner-starts-->
+<div class="banner">
+    <div class="container">
+        <div class="banner-top">
+            <div class="banner-text">
+                <h2>Aliquam erat</h2>
+                <h1>Suspendisse potenti</h1>
+                <div class="banner-btn">
+                    <a routerLink="detail">Read More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--banner-end-->
+<!--about-starts-->
+<div class="about">
+    <div class="container">
+        <div class="about-main">
+            <div class="col-md-12 about-left">
+                <div class="about-one">
+                    <h3>Blog Coffee</h3>
+                </div>
+                <div class="about-tre">
+                    <div class="a-1">
+                        <select style="width: 15%;" class="form-select" (click)="onTableSizeChange($event)">
+                            <option  disabled selected value="3">Tổng Blog/Trang</option>
+                            <option *ngFor="let size of tableSizes" value="{{size}}">{{size}} Blog/Trang</option>
+                        </select>
+                        <br>
+                        <div *ngFor="let blog of blogRecords 
+                                    | paginate: {  
+                                        itemsPerPage: tableSize,
+                                        currentPage: page,
+                                        totalItems: count 
+                                    };
+                                    let i = index
+                                " 
+                            class="col-md-4 abt-left">
+                            <a [routerLink]="['detail/',blog.id]"><img src="{{blog.image}}" alt=""/></a>
+                            <h3><a [routerLink]="['detail/',blog.id]">{{blog.title}}</a></h3>
+                            <p [innerHTML]="blog.short_desc"></p>
+                            <label>{{blog.date_create | date:'mediumDate'}}</label>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <pagination-controls
+                    previousLabel="Prev"
+                    nextLabel="Next"
+                    (pageChange)="onTableDataChange($event)">
+                </pagination-controls>
+            </div>
+            <div class="clearfix"></div>			
+        </div>		
+    </div>
+</div>
+<!--about-end-->
+<!--slide-starts-->
+<div class="slide">
+    <div class="container">
+        <div class="fle-xsel">
+        <ul id="flexiselDemo3">
+            <li>
+                <a href="#">
+                    <div class="banner-1">
+                        <img src="assets/images/s-1.jpg" class="img-responsive" alt="">
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <div class="banner-1">
+                        <img src="assets/images/s-2.jpg" class="img-responsive" alt="">
+                    </div>
+                </a>
+            </li>			
+            <li>
+                <a href="#">
+                    <div class="banner-1">
+                        <img src="assets/images/s-3.jpg" class="img-responsive" alt="">
+                    </div>
+                </a>
+            </li>		
+            <li>
+                <a href="#">
+                    <div class="banner-1">
+                        <img src="assets/images/s-4.jpg" class="img-responsive" alt="">
+                    </div>
+                </a>
+            </li>	
+            <li>
+                <a href="#">
+                    <div class="banner-1">
+                        <img src="assets/images/s-5.jpg" class="img-responsive" alt="">
+                    </div>
+                </a>
+            </li>	
+            <li>
+                <a href="#">
+                    <div class="banner-1">
+                        <img src="assets/images/s-6.jpg" class="img-responsive" alt="">
+                    </div>
+                </a>
+            </li>				
+        </ul>         
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>	
+<!--slide-end-->
+
+
